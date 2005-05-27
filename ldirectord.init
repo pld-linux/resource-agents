@@ -1,0 +1,64 @@
+#!/bin/sh
+#
+# ldirectord  Linux Director Daemon
+#
+# chkconfig:	345 92 40
+# description:	Start and stop ldirectord on non-heartbeat systems
+#		Using the config file /etc/ha.d/ldirectord.cf
+# processname:	ldirectord
+# config:	/etc/ha.d/ldirectord.cf
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get service config
+[ -f /etc/sysconfig/ldirectord ] && . /etc/sysconfig/ldirectord
+
+RETVAL=0
+case "$1" in
+  start)
+	if [ ! -f /var/lock/subsys/ldirectord ]; then
+        	msg_starting ldirectord
+		daemon ldirectord start
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/ldirectord
+	else    
+		msg_already_running ldirectord
+	fi
+	;;
+  stop)
+	if [ -f /var/lock/subsys/ldirectord ]; then
+		msg_stopping ldirectord
+		daemon ldirectord stop
+		rm -f /var/lock/subsys/ldirectord
+	else
+		msg_not_running ldirectord
+	fi
+	;;
+  restart)
+	action "Restarting ldirectord" ldirectord restart
+	;;
+  # What is it?
+  try-restart)
+        action "Try-Restarting ldirectord" ldirectord try-restart
+	;;
+  status)
+	status ldirectord status
+	;;
+  reload|force-reload)
+	if [ -f /var/lock/subsys/ldirectord ]; then
+		msg_reloading ldirectord
+		daemon ldirectord reload
+		RETVAL=$?
+	else
+		msg_not_running ldirectord
+		RETVAL=7
+	fi
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|try-restart|status|reload|force-reload}"
+	exit 3
+	;;
+esac
+
+exit $RETVAL
