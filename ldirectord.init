@@ -22,7 +22,7 @@ case "$1" in
 		daemon ldirectord start
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/ldirectord
-	else    
+	else
 		msg_already_running ldirectord
 	fi
 	;;
