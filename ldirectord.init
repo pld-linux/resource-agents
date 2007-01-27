@@ -14,9 +14,7 @@
 # Get service config
 [ -f /etc/sysconfig/ldirectord ] && . /etc/sysconfig/ldirectord
 
-RETVAL=0
-case "$1" in
-  start)
+start() {
 	if [ ! -f /var/lock/subsys/ldirectord ]; then
         	msg_starting ldirectord
 		daemon ldirectord start
@@ -25,8 +23,9 @@ case "$1" in
 	else
 		msg_already_running ldirectord
 	fi
-	;;
-  stop)
+}
+
+stop() {
 	if [ -f /var/lock/subsys/ldirectord ]; then
 		msg_stopping ldirectord
 		daemon ldirectord stop
@@ -34,17 +33,23 @@ case "$1" in
 	else
 		msg_not_running ldirectord
 	fi
+}
+
+RETVAL=0
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
 	;;
   restart)
-  	$0 stop
-	$0 start
+  	stop
+	start
 	;;
   # What is it?
   try-restart)
-        action "Try-Restarting ldirectord" ldirectord try-restart
-	;;
-  status)
-	status ldirectord status
+	action "Try-Restarting ldirectord" ldirectord try-restart
 	;;
   reload|force-reload)
 	if [ -f /var/lock/subsys/ldirectord ]; then
@@ -55,6 +60,11 @@ case "$1" in
 		msg_not_running ldirectord
 		RETVAL=7
 	fi
+	;;
+  status)
+  # CHECKME
+	status ldirectord status
+	RETVAL=$?
 	;;
   *)
 	msg_usage "$0 {start|stop|restart|try-restart|status|reload|force-reload}"
