@@ -36,7 +36,8 @@ case "$1" in
 	fi
 	;;
   restart)
-	action "Restarting ldirectord" ldirectord restart
+  	$0 stop
+	$0 start
 	;;
   # What is it?
   try-restart)
