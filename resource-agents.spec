@@ -17,10 +17,13 @@ Source0:	http://www.linux-ha.org/w/images/9/99/Resource-agents-%{version}-%{subv
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	cluster-glue-libs-devel
+BuildRequires:	docbook-dtd44-xml
 #BuildRequires:	docbook-dtds
 BuildRequires:	docbook-style-xsl
 BuildRequires:	glib2-devel
-BuildRequires:	libxslt
+BuildRequires:	libtool
+BuildRequires:	libxslt-progs
+BuildRequires:	openssl-tools
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel
 BuildRequires:	which
