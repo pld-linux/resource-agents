@@ -66,6 +66,12 @@ See 'ldirectord -h' and linux-ha/doc/ldirectord for more information.
 %{__automake}
 %{__autoconf}
 %configure \
+	FSCK=/sbin/fsck \
+	FUSER=/bin/fuser \
+	IPTABLES=/usr/sbin/iptables \
+	MAILCMD=/bin/mail \
+	MOUNT=/bin/mount \
+	PING=/bin/ping \
 	--with-initdir=/etc/rc.d/init.d \
 	--enable-fatal-warnings=yes \
 	--docdir=%{_docdir}/%{name}-%{version}
