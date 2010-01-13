@@ -1,8 +1,5 @@
-# TODO
-# - avoid remote docbook.xsl include:
-#  /usr/bin/xsltproc --xinclude http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl
 %define		subver	rc2
-%define		rel		0.2
+%define		rel		0.7
 Summary:	Reusable cluster resource scripts
 Name:		resource-agents
 Version:	1.0.2
@@ -40,7 +37,8 @@ Requires(post,preun):	/sbin/chkconfig
 Requires:	ipvsadm
 Requires:	perl-MailTools
 Requires:	perl-Net-SSLeay
-Requires:	perl-libwww-perl
+Requires:	perl-Socket6
+Requires:	perl-libwww
 Requires:	rc-scripts
 Provides:	heartbeat-ldirectord
 Obsoletes:	heartbeat-ldirectord
@@ -80,9 +78,12 @@ See 'ldirectord -h' and linux-ha/doc/ldirectord for more information.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/ha.d
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/ha.d/resource.d
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# in doc
+rm $RPM_BUILD_ROOT%{_datadir}/%{name}/ra-api-1.dtd
 
 rm -f $RPM_BUILD_ROOT/etc/rc.d/init.d/ldirectord
 install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/ldirectord
@@ -97,7 +98,6 @@ find $RPM_BUILD_ROOT -name '*.pyo' -type f -print0 | xargs -0 rm -f
 # Unset execute permissions from things that shouln't have it
 find $RPM_BUILD_ROOT -name '.ocf-*' -type f -print0 | xargs -0 chmod a-x
 find $RPM_BUILD_ROOT -name 'ocf-*'  -type f -print0 | xargs -0 chmod a-x
-find $RPM_BUILD_ROOT -name '*.dtd'  -type f -print0 | xargs -0 chmod a-x
 chmod a+rx $RPM_BUILD_ROOT%{_sbindir}/ocf-tester
 
 %clean
@@ -115,8 +115,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS doc/README.webapps
-%doc %{_datadir}/%{name}/ra-api-1.dtd
+%doc AUTHORS doc/README.webapps heartbeat/ra-api-1.dtd
 %dir %{_prefix}/lib/ocf
 %dir %{_prefix}/lib/ocf/resource.d
 %{_prefix}/lib/ocf/resource.d/heartbeat
@@ -129,6 +128,7 @@ fi
 %{_libdir}/heartbeat/ocf-shellfuncs
 %{_libdir}/heartbeat/ocf-returncodes
 %dir %{_sysconfdir}/ha.d
+%dir %{_sysconfdir}/ha.d/resource.d
 %{_sysconfdir}/ha.d/shellfuncs
 
 %{_libdir}/heartbeat/send_arp
