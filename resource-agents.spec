@@ -1,14 +1,14 @@
-%define		subver	rc2
-%define		rel		0.7
+%define		gitrel	gc06b6f3
+%define		gitrel2	c06b6f3
 Summary:	Reusable cluster resource scripts
 Name:		resource-agents
-Version:	1.0.2
-Release:	0.%{subver}.%{rel}
+Version:	1.0.4
+Release:	1
 License:	GPL v2+; LGPL v2.1+
 Group:		Daemons
 URL:		http://www.linux-ha.org/
-Source0:	http://www.linux-ha.org/w/images/9/99/Resource-agents-%{version}-%{subver}.tar.bz2
-# Source0-md5:	fe1ec605e57279f689d893f0c85bef2c
+Source0:	https://download.github.com/ClusterLabs-%{name}-agents-%{version}-0-%{gitrel}.tar.gz
+# Source0-md5:	732754ad75e02712f12f7aa911711a6b
 Source1:	ldirectord.init
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -55,7 +55,7 @@ lditrecord is simple to install and works with the heartbeat code
 See 'ldirectord -h' and linux-ha/doc/ldirectord for more information.
 
 %prep
-%setup -q -n %{name}-%{version}-%{subver}
+%setup -q -n ClusterLabs-%{name}-%{gitrel2}
 
 %build
 %{__libtoolize}
@@ -66,7 +66,7 @@ See 'ldirectord -h' and linux-ha/doc/ldirectord for more information.
 %configure \
 	FSCK=/sbin/fsck \
 	FUSER=/bin/fuser \
-	IPTABLES=/usr/sbin/iptables \
+	IPTABLES=%{_sbindir}/iptables \
 	MAILCMD=/bin/mail \
 	MOUNT=/bin/mount \
 	PING=/bin/ping \
@@ -96,7 +96,6 @@ find $RPM_BUILD_ROOT -name '*.pyc' -type f -print0 | xargs -0 rm -f
 find $RPM_BUILD_ROOT -name '*.pyo' -type f -print0 | xargs -0 rm -f
 
 # Unset execute permissions from things that shouln't have it
-find $RPM_BUILD_ROOT -name '.ocf-*' -type f -print0 | xargs -0 chmod a-x
 find $RPM_BUILD_ROOT -name 'ocf-*'  -type f -print0 | xargs -0 chmod a-x
 chmod a+rx $RPM_BUILD_ROOT%{_sbindir}/ocf-tester
 
@@ -119,21 +118,25 @@ fi
 %dir %{_prefix}/lib/ocf
 %dir %{_prefix}/lib/ocf/resource.d
 %{_prefix}/lib/ocf/resource.d/heartbeat
+%dir %{_prefix}/lib/ocf/lib/heartbeat
+%{_prefix}/lib/ocf/lib/heartbeat/ocf-binaries
+%{_prefix}/lib/ocf/lib/heartbeat/ocf-directories
+%{_prefix}/lib/ocf/lib/heartbeat/ocf-returncodes
+%{_prefix}/lib/ocf/lib/heartbeat/ocf-shellfuncs
+%{_datadir}/resource-agents/ocft
 %attr(755,root,root) %{_sbindir}/ocf-tester
+%attr(755,root,root) %{_sbindir}/ocft
 %attr(755,root,root) %{_sbindir}/sfex_init
+%attr(755,root,root) %{_sbindir}/sfex_stat
 %{_mandir}/man7/*.7*
-
-# For compatability with pre-existing agents
-%dir %{_libdir}/heartbeat
-%{_libdir}/heartbeat/ocf-shellfuncs
-%{_libdir}/heartbeat/ocf-returncodes
-%dir %{_sysconfdir}/ha.d
-%dir %{_sysconfdir}/ha.d/resource.d
 %{_sysconfdir}/ha.d/shellfuncs
 
 %{_libdir}/heartbeat/send_arp
 %{_libdir}/heartbeat/sfex_daemon
 %{_libdir}/heartbeat/findif
+%{_libdir}/heartbeat/tickle_tcp
+
+%{_includedir}/heartbeat/agent_config.h
 
 %files -n ldirectord
 %defattr(644,root,root,755)
