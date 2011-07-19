@@ -3,7 +3,7 @@
 Summary:	Reusable cluster resource scripts
 Name:		resource-agents
 Version:	1.0.4
-Release:	1
+Release:	1.1
 License:	GPL v2+; LGPL v2.1+
 Group:		Daemons
 URL:		http://www.linux-ha.org/
@@ -132,10 +132,10 @@ fi
 %{_mandir}/man7/*.7*
 %{_sysconfdir}/ha.d/shellfuncs
 
-%{_libdir}/heartbeat/send_arp
-%{_libdir}/heartbeat/sfex_daemon
-%{_libdir}/heartbeat/findif
-%{_libdir}/heartbeat/tickle_tcp
+%attr(755,root,root) %{_libdir}/heartbeat/send_arp
+%attr(755,root,root) %{_libdir}/heartbeat/sfex_daemon
+%attr(755,root,root) %{_libdir}/heartbeat/findif
+%attr(755,root,root) %{_libdir}/heartbeat/tickle_tcp
 
 %{_includedir}/heartbeat/agent_config.h
 
