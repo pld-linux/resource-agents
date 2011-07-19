@@ -119,6 +119,7 @@ fi
 %dir %{_prefix}/lib/ocf/resource.d
 %{_prefix}/lib/ocf/resource.d/heartbeat
 %attr(755,root,root) %{_prefix}/lib/ocf/resource.d/heartbeat/*
+%{_prefix}/lib/ocf/lib
 %dir %{_prefix}/lib/ocf/lib/heartbeat
 %{_prefix}/lib/ocf/lib/heartbeat/ocf-binaries
 %{_prefix}/lib/ocf/lib/heartbeat/ocf-directories
