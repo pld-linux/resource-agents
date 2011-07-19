@@ -3,7 +3,7 @@
 Summary:	Reusable cluster resource scripts
 Name:		resource-agents
 Version:	1.0.4
-Release:	1.1
+Release:	2
 License:	GPL v2+; LGPL v2.1+
 Group:		Daemons
 URL:		http://www.linux-ha.org/
