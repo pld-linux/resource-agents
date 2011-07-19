@@ -89,6 +89,12 @@ rm -f $RPM_BUILD_ROOT/etc/rc.d/init.d/ldirectord
 install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/ldirectord
 cp -a ldirectord/ldirectord.cf $RPM_BUILD_ROOT%{_sysconfdir}/ha.d
 
+# Backwards compatibility for older resource agents
+for i in ocf-binaries ocf-directories ocf-returncodes ocf-shellfuncs; do
+	ln -s %{_libdir}/ocf/lib/heartbeat/$i \
+		$RPM_BUILD_ROOT%{_libdir}/ocf/resource.d/heartbeat/.$i
+done
+
 # Dont package static libs or compiled python
 find $RPM_BUILD_ROOT -name '*.a' -type f -print0 | xargs -0 rm -f
 find $RPM_BUILD_ROOT -name '*.la' -type f -print0 | xargs -0 rm -f
@@ -115,16 +121,16 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS doc/README.webapps heartbeat/ra-api-1.dtd
-%dir %{_prefix}/lib/ocf
-%dir %{_prefix}/lib/ocf/resource.d
-%{_prefix}/lib/ocf/resource.d/heartbeat
-%attr(755,root,root) %{_prefix}/lib/ocf/resource.d/heartbeat/*
-%{_prefix}/lib/ocf/lib
-%dir %{_prefix}/lib/ocf/lib/heartbeat
-%{_prefix}/lib/ocf/lib/heartbeat/ocf-binaries
-%{_prefix}/lib/ocf/lib/heartbeat/ocf-directories
-%{_prefix}/lib/ocf/lib/heartbeat/ocf-returncodes
-%{_prefix}/lib/ocf/lib/heartbeat/ocf-shellfuncs
+%attr(755,root,root) %{_libdir}/heartbeat/send_arp
+%attr(755,root,root) %{_libdir}/heartbeat/sfex_daemon
+%attr(755,root,root) %{_libdir}/heartbeat/findif
+%attr(755,root,root) %{_libdir}/heartbeat/tickle_tcp
+%dir %{_libdir}/ocf
+%{_libdir}/ocf/lib
+%dir %{_libdir}/ocf/resource.d
+%dir %{_libdir}/ocf/resource.d/heartbeat
+%{_libdir}/ocf/resource.d/heartbeat/.ocf-*
+%attr(755,root,root) %{_libdir}/ocf/resource.d/heartbeat/*
 %{_datadir}/resource-agents/ocft
 %attr(755,root,root) %{_sbindir}/ocf-tester
 %attr(755,root,root) %{_sbindir}/ocft
@@ -133,12 +139,6 @@ fi
 %{_mandir}/man7/*.7*
 %{_mandir}/man8/ocf-tester.8*
 %{_sysconfdir}/ha.d/shellfuncs
-
-%attr(755,root,root) %{_libdir}/heartbeat/send_arp
-%attr(755,root,root) %{_libdir}/heartbeat/sfex_daemon
-%attr(755,root,root) %{_libdir}/heartbeat/findif
-%attr(755,root,root) %{_libdir}/heartbeat/tickle_tcp
-
 %{_includedir}/heartbeat/agent_config.h
 
 %attr(1755,root,root) /var/run/resource-agents
