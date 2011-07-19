@@ -130,6 +130,7 @@ fi
 %attr(755,root,root) %{_sbindir}/sfex_init
 %attr(755,root,root) %{_sbindir}/sfex_stat
 %{_mandir}/man7/*.7*
+%{_mandir}/man8/ocf-tester.8*
 %{_sysconfdir}/ha.d/shellfuncs
 
 %attr(755,root,root) %{_libdir}/heartbeat/send_arp
@@ -138,6 +139,8 @@ fi
 %attr(755,root,root) %{_libdir}/heartbeat/tickle_tcp
 
 %{_includedir}/heartbeat/agent_config.h
+
+%attr(1755,root,root) /var/run/resource-agents
 
 %files -n ldirectord
 %defattr(644,root,root,755)
