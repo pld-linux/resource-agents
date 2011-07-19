@@ -131,7 +131,7 @@ fi
 %dir %{_libdir}/ocf/resource.d/heartbeat
 %{_libdir}/ocf/resource.d/heartbeat/.ocf-*
 %attr(755,root,root) %{_libdir}/ocf/resource.d/heartbeat/*
-%{_datadir}/resource-agents/ocft
+%{_datadir}/resource-agents
 %attr(755,root,root) %{_sbindir}/ocf-tester
 %attr(755,root,root) %{_sbindir}/ocft
 %attr(755,root,root) %{_sbindir}/sfex_init
@@ -140,7 +140,6 @@ fi
 %{_mandir}/man8/ocf-tester.8*
 %{_sysconfdir}/ha.d/shellfuncs
 %{_includedir}/heartbeat/agent_config.h
-
 %attr(1755,root,root) /var/run/resource-agents
 
 %files -n ldirectord
