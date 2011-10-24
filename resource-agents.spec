@@ -1,14 +1,13 @@
-%define		gitrel	gc06b6f3
-%define		gitrel2	c06b6f3
+%define		gitrel	b735277
 Summary:	Reusable cluster resource scripts
 Name:		resource-agents
-Version:	1.0.4
-Release:	2
+Version:	3.9.2
+Release:	1
 License:	GPL v2+; LGPL v2.1+
 Group:		Daemons
 URL:		http://www.linux-ha.org/
-Source0:	https://download.github.com/ClusterLabs-%{name}-agents-%{version}-0-%{gitrel}.tar.gz
-# Source0-md5:	732754ad75e02712f12f7aa911711a6b
+Source0:	https://github.com/ClusterLabs/resource-agents/tarball/v3.9.2
+# Source0-md5:	3b5790e8041f2a459d8a0ff310682bfe
 Source1:	ldirectord.init
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -55,7 +54,7 @@ lditrecord is simple to install and works with the heartbeat code
 See 'ldirectord -h' and linux-ha/doc/ldirectord for more information.
 
 %prep
-%setup -q -n ClusterLabs-%{name}-%{gitrel2}
+%setup -q -n ClusterLabs-%{name}-%{gitrel}
 
 %build
 %{__libtoolize}
@@ -89,12 +88,6 @@ rm -f $RPM_BUILD_ROOT/etc/rc.d/init.d/ldirectord
 install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/ldirectord
 cp -a ldirectord/ldirectord.cf $RPM_BUILD_ROOT%{_sysconfdir}/ha.d
 
-# Backwards compatibility for older resource agents
-for i in ocf-binaries ocf-directories ocf-returncodes ocf-shellfuncs; do
-	ln -s %{_libdir}/ocf/lib/heartbeat/$i \
-		$RPM_BUILD_ROOT%{_libdir}/ocf/resource.d/heartbeat/.$i
-done
-
 # Dont package static libs or compiled python
 find $RPM_BUILD_ROOT -name '*.a' -type f -print0 | xargs -0 rm -f
 find $RPM_BUILD_ROOT -name '*.la' -type f -print0 | xargs -0 rm -f
@@ -125,22 +118,38 @@ fi
 %attr(755,root,root) %{_libdir}/heartbeat/sfex_daemon
 %attr(755,root,root) %{_libdir}/heartbeat/findif
 %attr(755,root,root) %{_libdir}/heartbeat/tickle_tcp
-%dir %{_libdir}/ocf
-%{_libdir}/ocf/lib
-%dir %{_libdir}/ocf/resource.d
-%dir %{_libdir}/ocf/resource.d/heartbeat
-%{_libdir}/ocf/resource.d/heartbeat/.ocf-*
-%attr(755,root,root) %{_libdir}/ocf/resource.d/heartbeat/*
 %{_datadir}/resource-agents
 %attr(755,root,root) %{_sbindir}/ocf-tester
 %attr(755,root,root) %{_sbindir}/ocft
 %attr(755,root,root) %{_sbindir}/sfex_init
 %attr(755,root,root) %{_sbindir}/sfex_stat
-%{_mandir}/man7/*.7*
-%{_mandir}/man8/ocf-tester.8*
+%attr(755,root,root) %{_sbindir}/rhev-check.sh
 %{_sysconfdir}/ha.d/shellfuncs
 %{_includedir}/heartbeat/agent_config.h
 %attr(1755,root,root) /var/run/resource-agents
+%dir %{_datadir}/cluster
+%dir %{_datadir}/cluster/utils
+%dir %{_datadir}/cluster/relaxng
+%dir %{_prefix}/lib/ocf
+%dir %{_prefix}/lib/ocf/resource.d
+%dir %{_prefix}/lib/ocf/resource.d/heartbeat
+%dir %{_prefix}/lib/ocf/lib
+%dir %{_prefix}/lib/ocf/lib/heartbeat
+%attr(755,root,root) %{_prefix}/lib/ocf/resource.d/heartbeat/*
+%attr(755,root,root) %{_datadir}/cluster/*.sh
+%{_datadir}/cluster/*.metadata
+%{_datadir}/cluster/SAP*
+%{_datadir}/cluster/svclib_nfslock
+%{_datadir}/cluster/ocf-shellfuncs
+%{_datadir}/cluster/relaxng/*
+%attr(755,root,root) %{_datadir}/cluster/utils/*
+%{_prefix}/lib/ocf/resource.d/heartbeat/.ocf-*
+%{_prefix}/lib/ocf/lib/heartbeat/ocf-*
+%{_prefix}/lib/ocf/resource.d/redhat
+%{_mandir}/man7/*.7*
+%{_mandir}/man8/ocf-tester.8*
+%{_mandir}/man8/sfex_init.8*
+
 
 %files -n ldirectord
 %defattr(644,root,root,755)
