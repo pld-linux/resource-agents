@@ -9,6 +9,7 @@ URL:		http://www.linux-ha.org/
 Source0:	https://github.com/ClusterLabs/resource-agents/tarball/v3.9.2
 # Source0-md5:	3b5790e8041f2a459d8a0ff310682bfe
 Source1:	ldirectord.init
+Source2:	%{name}.tmpfiles
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	cluster-glue-libs-devel
@@ -77,7 +78,8 @@ See 'ldirectord -h' and linux-ha/doc/ldirectord for more information.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/ha.d/resource.d
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/ha.d/resource.d \
+	$RPM_BUILD_ROOT%{systemdtmpfilesdir}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -87,6 +89,7 @@ rm $RPM_BUILD_ROOT%{_datadir}/%{name}/ra-api-1.dtd
 rm -f $RPM_BUILD_ROOT/etc/rc.d/init.d/ldirectord
 install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/ldirectord
 cp -a ldirectord/ldirectord.cf $RPM_BUILD_ROOT%{_sysconfdir}/ha.d
+install %{SOURCE2} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
 
 # Dont package static libs or compiled python
 find $RPM_BUILD_ROOT -name '*.a' -type f -print0 | xargs -0 rm -f
@@ -149,6 +152,7 @@ fi
 %{_mandir}/man7/*.7*
 %{_mandir}/man8/ocf-tester.8*
 %{_mandir}/man8/sfex_init.8*
+%{systemdtmpfilesdir}/%{name}.conf
 
 
 %files -n ldirectord
