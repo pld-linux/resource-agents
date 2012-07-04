@@ -2,7 +2,7 @@
 Summary:	Reusable cluster resource scripts
 Name:		resource-agents
 Version:	3.9.2
-Release:	1
+Release:	2
 License:	GPL v2+; LGPL v2.1+
 Group:		Daemons
 URL:		http://www.linux-ha.org/
@@ -10,6 +10,7 @@ Source0:	https://github.com/ClusterLabs/resource-agents/tarball/v3.9.2
 # Source0-md5:	3b5790e8041f2a459d8a0ff310682bfe
 Source1:	ldirectord.init
 Source2:	%{name}.tmpfiles
+Patch0:		%{name}-no_header_parsing.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	cluster-glue-libs-devel
@@ -56,6 +57,7 @@ See 'ldirectord -h' and linux-ha/doc/ldirectord for more information.
 
 %prep
 %setup -q -n ClusterLabs-%{name}-%{gitrel}
+%patch0 -p1
 
 %build
 %{__libtoolize}
@@ -72,6 +74,7 @@ See 'ldirectord -h' and linux-ha/doc/ldirectord for more information.
 	PING=/bin/ping \
 	--with-initdir=/etc/rc.d/init.d \
 	--enable-fatal-warnings=yes \
+	--with-ocf-root=%{_prefix}/lib/ocf \
 	--docdir=%{_docdir}/%{name}-%{version}
 
 %{__make}
@@ -80,6 +83,7 @@ See 'ldirectord -h' and linux-ha/doc/ldirectord for more information.
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/ha.d/resource.d \
 	$RPM_BUILD_ROOT%{systemdtmpfilesdir}
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -127,6 +131,8 @@ fi
 %attr(755,root,root) %{_sbindir}/sfex_init
 %attr(755,root,root) %{_sbindir}/sfex_stat
 %attr(755,root,root) %{_sbindir}/rhev-check.sh
+%dir %{_sysconfdir}/ha.d
+%dir %{_sysconfdir}/ha.d/resource.d
 %{_sysconfdir}/ha.d/shellfuncs
 %{_includedir}/heartbeat/agent_config.h
 %attr(1755,root,root) /var/run/resource-agents
@@ -153,7 +159,6 @@ fi
 %{_mandir}/man8/ocf-tester.8*
 %{_mandir}/man8/sfex_init.8*
 %{systemdtmpfilesdir}/%{name}.conf
-
 
 %files -n ldirectord
 %defattr(644,root,root,755)
