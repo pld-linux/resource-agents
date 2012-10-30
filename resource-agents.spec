@@ -23,6 +23,7 @@ BuildRequires:	openssl-tools
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel
 BuildRequires:	which
+Requires:	cluster-glue
 Obsoletes:	heartbeat-resources < 3.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
