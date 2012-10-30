@@ -1,16 +1,16 @@
-%define		gitrel	b735277
 Summary:	Reusable cluster resource scripts
 Name:		resource-agents
-Version:	3.9.2
-Release:	2
+Version:	3.9.3
+Release:	1
 License:	GPL v2+; LGPL v2.1+
 Group:		Daemons
 URL:		http://www.linux-ha.org/
-Source0:	https://github.com/ClusterLabs/resource-agents/tarball/v3.9.2
-# Source0-md5:	3b5790e8041f2a459d8a0ff310682bfe
+Source0:	https://github.com/ClusterLabs/resource-agents/tarball/v3.9.3/%{name}-%{version}.tar.bz2
+# Source0-md5:	244cf2b90c94c6a0c5ed0747244eaa56
 Source1:	ldirectord.init
 Source2:	%{name}.tmpfiles
 Patch0:		%{name}-no_header_parsing.patch
+Patch1:		%{name}-bash.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	cluster-glue-libs-devel
@@ -57,8 +57,9 @@ lditrecord is simple to install and works with the heartbeat code
 See 'ldirectord -h' and linux-ha/doc/ldirectord for more information.
 
 %prep
-%setup -q -n ClusterLabs-%{name}-%{gitrel}
+%setup -q -n ClusterLabs-%{name}-2fafa06
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -155,6 +156,7 @@ fi
 %attr(755,root,root) %{_datadir}/cluster/utils/*
 %{_prefix}/lib/ocf/resource.d/heartbeat/.ocf-*
 %{_prefix}/lib/ocf/lib/heartbeat/ocf-*
+%{_prefix}/lib/ocf/lib/heartbeat/*.sh
 %{_prefix}/lib/ocf/resource.d/redhat
 %{_mandir}/man7/*.7*
 %{_mandir}/man8/ocf-tester.8*

@@ -1,0 +1,54 @@
+diff -dur -x '*~' ClusterLabs-resource-agents-2fafa06.orig/heartbeat/CTDB ClusterLabs-resource-agents-2fafa06/heartbeat/CTDB
+--- ClusterLabs-resource-agents-2fafa06.orig/heartbeat/CTDB	2012-05-25 18:23:59.000000000 +0200
++++ ClusterLabs-resource-agents-2fafa06/heartbeat/CTDB	2012-10-30 13:48:13.000000000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ #             OCF Resource Agent for managing CTDB
+ #
+diff -dur -x '*~' ClusterLabs-resource-agents-2fafa06.orig/heartbeat/Xen ClusterLabs-resource-agents-2fafa06/heartbeat/Xen
+--- ClusterLabs-resource-agents-2fafa06.orig/heartbeat/Xen	2012-05-25 18:23:59.000000000 +0200
++++ ClusterLabs-resource-agents-2fafa06/heartbeat/Xen	2012-10-30 13:48:27.000000000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ #
+ # Support:      linux-ha@lists.linux-ha.org
+diff -dur -x '*~' ClusterLabs-resource-agents-2fafa06.orig/heartbeat/apache ClusterLabs-resource-agents-2fafa06/heartbeat/apache
+--- ClusterLabs-resource-agents-2fafa06.orig/heartbeat/apache	2012-05-25 18:23:59.000000000 +0200
++++ ClusterLabs-resource-agents-2fafa06/heartbeat/apache	2012-10-30 13:48:43.000000000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ #	High-Availability Apache/IBMhttp control script
+ # 
+diff -dur -x '*~' ClusterLabs-resource-agents-2fafa06.orig/heartbeat/dhcpd ClusterLabs-resource-agents-2fafa06/heartbeat/dhcpd
+--- ClusterLabs-resource-agents-2fafa06.orig/heartbeat/dhcpd	2012-05-25 18:23:59.000000000 +0200
++++ ClusterLabs-resource-agents-2fafa06/heartbeat/dhcpd	2012-10-30 13:47:07.000000000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ #   Resource Agent for managing dhcpd resources.
+ #
+diff -dur -x '*~' ClusterLabs-resource-agents-2fafa06.orig/heartbeat/exportfs ClusterLabs-resource-agents-2fafa06/heartbeat/exportfs
+--- ClusterLabs-resource-agents-2fafa06.orig/heartbeat/exportfs	2012-05-25 18:23:59.000000000 +0200
++++ ClusterLabs-resource-agents-2fafa06/heartbeat/exportfs	2012-10-30 13:48:52.000000000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # exportfs
+ #
+ # Description: Manages nfs exported file system.
+diff -dur -x '*~' ClusterLabs-resource-agents-2fafa06.orig/heartbeat/nginx ClusterLabs-resource-agents-2fafa06/heartbeat/nginx
+--- ClusterLabs-resource-agents-2fafa06.orig/heartbeat/nginx	2012-05-25 18:23:59.000000000 +0200
++++ ClusterLabs-resource-agents-2fafa06/heartbeat/nginx	2012-10-30 13:49:01.000000000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ #	High-Availability nginx OCF resource agent
+ # 
