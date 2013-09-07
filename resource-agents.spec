@@ -1,16 +1,17 @@
 Summary:	Reusable cluster resource scripts
 Summary(pl.UTF-8):	Skrypty wielokrotnego użytku do obsługi zasobów klastrowych
 Name:		resource-agents
-Version:	3.9.3
+Version:	3.9.5
 Release:	1
 License:	GPL v2+, LGPL v2.1+
 Group:		Daemons
-Source0:	https://github.com/ClusterLabs/resource-agents/tarball/v3.9.3/%{name}-%{version}.tar.bz2
-# Source0-md5:	244cf2b90c94c6a0c5ed0747244eaa56
+Source0:	https://github.com/ClusterLabs/resource-agents/tarball/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	86ec112decf29906afb755016990f56f
 Source1:	ldirectord.init
 Source2:	%{name}.tmpfiles
 Patch0:		%{name}-no_header_parsing.patch
 Patch1:		%{name}-bash.patch
+Patch2:		%{name}-ac.patch
 URL:		http://www.linux-ha.org/
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.10.1
@@ -68,16 +69,17 @@ usługi HTTP, HTTPS i FTP. ldirectord jest prosty do zainstalowania i
 współpracuje z kodem heartbeat (http://www.linux-ha.org/).
 
 %prep
-%setup -q -n ClusterLabs-%{name}-2fafa06
+%setup -q -n ClusterLabs-%{name}-ac806fd
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__libtoolize}
 %{__aclocal}
+%{__autoconf}
 %{__autoheader}
 %{__automake}
-%{__autoconf}
 %configure \
 	FSCK=/sbin/fsck \
 	FUSER=/bin/fuser \
@@ -133,7 +135,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS doc/README.webapps heartbeat/ra-api-1.dtd
+%doc AUTHORS ChangeLog doc/README.webapps heartbeat/ra-api-1.dtd
 %attr(755,root,root) %{_sbindir}/ocf-tester
 %attr(755,root,root) %{_sbindir}/ocft
 %attr(755,root,root) %{_sbindir}/sfex_init
@@ -145,6 +147,7 @@ fi
 %{_sysconfdir}/ha.d/shellfuncs
 
 %attr(755,root,root) %{_libdir}/heartbeat/send_arp
+%attr(755,root,root) %{_libdir}/heartbeat/send_ua
 %attr(755,root,root) %{_libdir}/heartbeat/sfex_daemon
 %attr(755,root,root) %{_libdir}/heartbeat/findif
 %attr(755,root,root) %{_libdir}/heartbeat/tickle_tcp
