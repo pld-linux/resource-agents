@@ -1,3 +1,4 @@
+%include	/usr/lib/rpm/macros.perl
 Summary:	Reusable cluster resource scripts
 Summary(pl.UTF-8):	Skrypty wielokrotnego użytku do obsługi zasobów klastrowych
 Name:		resource-agents
@@ -26,6 +27,7 @@ BuildRequires:	openssl-tools
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel
+BuildRequires:	rpm-perlprov
 BuildRequires:	which
 Requires:	cluster-glue
 # for heartbeat parts
@@ -48,10 +50,6 @@ License:	GPL v2+
 Group:		Applications/System
 Requires(post,preun):	/sbin/chkconfig
 Requires:	ipvsadm
-Requires:	perl-MailTools
-Requires:	perl-Net-SSLeay
-Requires:	perl-Socket6
-Requires:	perl-libwww
 Requires:	rc-scripts
 Provides:	heartbeat-ldirectord
 Obsoletes:	heartbeat-ldirectord
@@ -110,15 +108,8 @@ install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/ldirectord
 cp -a ldirectord/ldirectord.cf $RPM_BUILD_ROOT%{_sysconfdir}/ha.d
 install %{SOURCE2} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
 
-# Don't package static modules or compiled python
-find $RPM_BUILD_ROOT -name '*.a' -type f -print0 | xargs -0 rm -f
-find $RPM_BUILD_ROOT -name '*.la' -type f -print0 | xargs -0 rm -f
-find $RPM_BUILD_ROOT -name '*.pyc' -type f -print0 | xargs -0 rm -f
-find $RPM_BUILD_ROOT -name '*.pyo' -type f -print0 | xargs -0 rm -f
-
 # Unset execute permissions from things that shouln't have it
-find $RPM_BUILD_ROOT -name 'ocf-*'  -type f -print0 | xargs -0 chmod a-x
-chmod a+rx $RPM_BUILD_ROOT%{_sbindir}/ocf-tester
+find $RPM_BUILD_ROOT%{_datadir} -name 'ocf-*'  -type f -print0 | xargs -0 chmod a-x
 
 %clean
 rm -rf $RPM_BUILD_ROOT
