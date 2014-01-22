@@ -111,6 +111,8 @@ install %{SOURCE2} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
 # Unset execute permissions from things that shouln't have it
 find $RPM_BUILD_ROOT%{_datadir} -name 'ocf-*'  -type f -print0 | xargs -0 chmod a-x
 
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
