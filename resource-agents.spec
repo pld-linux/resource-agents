@@ -30,8 +30,6 @@ BuildRequires:	python-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	which
 Requires:	cluster-glue
-# for heartbeat parts
-Requires:	heartbeat-libs >= 3
 Obsoletes:	heartbeat-resources < 3.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
