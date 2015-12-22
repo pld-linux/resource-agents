@@ -2,12 +2,12 @@
 Summary:	Reusable cluster resource scripts
 Summary(pl.UTF-8):	Skrypty wielokrotnego użytku do obsługi zasobów klastrowych
 Name:		resource-agents
-Version:	3.9.5
-Release:	2
+Version:	3.9.6
+Release:	1
 License:	GPL v2+, LGPL v2.1+
 Group:		Daemons
-Source0:	https://github.com/ClusterLabs/resource-agents/tarball/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	86ec112decf29906afb755016990f56f
+Source0:	https://github.com/ClusterLabs/resource-agents/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	6873d5a217aee3026193fb85bfa18a4a
 Source1:	ldirectord.init
 Source2:	%{name}.tmpfiles
 Patch0:		%{name}-no_header_parsing.patch
@@ -65,7 +65,7 @@ usługi HTTP, HTTPS i FTP. ldirectord jest prosty do zainstalowania i
 współpracuje z kodem heartbeat (http://www.linux-ha.org/).
 
 %prep
-%setup -q -n ClusterLabs-%{name}-ac806fd
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -86,7 +86,8 @@ współpracuje z kodem heartbeat (http://www.linux-ha.org/).
 	--docdir=%{_docdir}/%{name}-%{version} \
 	--enable-fatal-warnings \
 	--with-initdir=/etc/rc.d/init.d \
-	--with-ocf-root=%{_prefix}/lib/ocf
+	--with-ocf-root=%{_prefix}/lib/ocf \
+	--with-systemdsystemunitdir=%{systemdunitdir}
 
 %{__make}
 
@@ -182,5 +183,6 @@ fi
 %attr(755,root,root) %{_sysconfdir}/ha.d/resource.d/ldirectord
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/ldirectord
 %attr(754,root,root) /etc/rc.d/init.d/ldirectord
+%{systemdunitdir}/ldirectord.service
 %attr(755,root,root) %{_sbindir}/ldirectord
 %{_mandir}/man8/ldirectord.8*
