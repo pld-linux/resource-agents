@@ -2,12 +2,13 @@
 Summary:	Reusable cluster resource scripts
 Summary(pl.UTF-8):	Skrypty wielokrotnego użytku do obsługi zasobów klastrowych
 Name:		resource-agents
-Version:	3.9.6
+Version:	3.9.7
 Release:	1
 License:	GPL v2+, LGPL v2.1+
 Group:		Daemons
+#Source0Download: https://github.com/ClusterLabs/resource-agents/releases
 Source0:	https://github.com/ClusterLabs/resource-agents/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	6873d5a217aee3026193fb85bfa18a4a
+# Source0-md5:	c59096b1bacc704e8a5a285f15729109
 Source1:	ldirectord.init
 Source2:	%{name}.tmpfiles
 Patch0:		%{name}-no_header_parsing.patch
