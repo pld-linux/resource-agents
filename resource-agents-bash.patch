@@ -1,62 +1,72 @@
-diff -dur -x '*~' ClusterLabs-resource-agents-2fafa06.orig/heartbeat/CTDB ClusterLabs-resource-agents-2fafa06/heartbeat/CTDB
---- ClusterLabs-resource-agents-2fafa06.orig/heartbeat/CTDB	2012-05-25 18:23:59.000000000 +0200
-+++ ClusterLabs-resource-agents-2fafa06/heartbeat/CTDB	2012-10-30 13:48:13.000000000 +0100
-@@ -1,4 +1,4 @@
--#!/bin/sh
-+#!/bin/bash
- #
- #             OCF Resource Agent for managing CTDB
- #
-diff -dur -x '*~' ClusterLabs-resource-agents-2fafa06.orig/heartbeat/Xen ClusterLabs-resource-agents-2fafa06/heartbeat/Xen
---- ClusterLabs-resource-agents-2fafa06.orig/heartbeat/Xen	2012-05-25 18:23:59.000000000 +0200
-+++ ClusterLabs-resource-agents-2fafa06/heartbeat/Xen	2012-10-30 13:48:27.000000000 +0100
-@@ -1,4 +1,4 @@
--#!/bin/sh
-+#!/bin/bash
- #
- #
- # Support:      linux-ha@lists.linux-ha.org
-diff -dur -x '*~' ClusterLabs-resource-agents-2fafa06.orig/heartbeat/apache ClusterLabs-resource-agents-2fafa06/heartbeat/apache
---- ClusterLabs-resource-agents-2fafa06.orig/heartbeat/apache	2012-05-25 18:23:59.000000000 +0200
-+++ ClusterLabs-resource-agents-2fafa06/heartbeat/apache	2012-10-30 13:48:43.000000000 +0100
+diff -dur resource-agents-3.9.7.orig/heartbeat/apache resource-agents-3.9.7/heartbeat/apache
+--- resource-agents-3.9.7.orig/heartbeat/apache	2016-02-03 11:57:55.000000000 +0100
++++ resource-agents-3.9.7/heartbeat/apache	2016-11-28 10:10:14.000000000 +0100
 @@ -1,4 +1,4 @@
 -#!/bin/sh
 +#!/bin/bash
  #
  #	High-Availability Apache/IBMhttp control script
  # 
-diff -dur -x '*~' ClusterLabs-resource-agents-2fafa06.orig/heartbeat/dhcpd ClusterLabs-resource-agents-2fafa06/heartbeat/dhcpd
---- ClusterLabs-resource-agents-2fafa06.orig/heartbeat/dhcpd	2012-05-25 18:23:59.000000000 +0200
-+++ ClusterLabs-resource-agents-2fafa06/heartbeat/dhcpd	2012-10-30 13:47:07.000000000 +0100
+diff -dur resource-agents-3.9.7.orig/heartbeat/CTDB resource-agents-3.9.7/heartbeat/CTDB
+--- resource-agents-3.9.7.orig/heartbeat/CTDB	2016-02-03 11:57:55.000000000 +0100
++++ resource-agents-3.9.7/heartbeat/CTDB	2016-11-28 10:10:14.000000000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ #             OCF Resource Agent for managing CTDB
+ #
+diff -dur resource-agents-3.9.7.orig/heartbeat/dhcpd resource-agents-3.9.7/heartbeat/dhcpd
+--- resource-agents-3.9.7.orig/heartbeat/dhcpd	2016-02-03 11:57:55.000000000 +0100
++++ resource-agents-3.9.7/heartbeat/dhcpd	2016-11-28 10:10:14.000000000 +0100
 @@ -1,4 +1,4 @@
 -#!/bin/sh
 +#!/bin/bash
  #
  #   Resource Agent for managing dhcpd resources.
  #
-diff -dur -x '*~' ClusterLabs-resource-agents-2fafa06.orig/heartbeat/exportfs ClusterLabs-resource-agents-2fafa06/heartbeat/exportfs
---- ClusterLabs-resource-agents-2fafa06.orig/heartbeat/exportfs	2012-05-25 18:23:59.000000000 +0200
-+++ ClusterLabs-resource-agents-2fafa06/heartbeat/exportfs	2012-10-30 13:48:52.000000000 +0100
+diff -dur resource-agents-3.9.7.orig/heartbeat/exportfs resource-agents-3.9.7/heartbeat/exportfs
+--- resource-agents-3.9.7.orig/heartbeat/exportfs	2016-02-03 11:57:55.000000000 +0100
++++ resource-agents-3.9.7/heartbeat/exportfs	2016-11-28 10:10:14.000000000 +0100
 @@ -1,4 +1,4 @@
 -#!/bin/sh
 +#!/bin/bash
  # exportfs
  #
  # Description: Manages nfs exported file system.
-diff -dur -x '*~' ClusterLabs-resource-agents-2fafa06.orig/heartbeat/nginx ClusterLabs-resource-agents-2fafa06/heartbeat/nginx
---- ClusterLabs-resource-agents-2fafa06.orig/heartbeat/nginx	2012-05-25 18:23:59.000000000 +0200
-+++ ClusterLabs-resource-agents-2fafa06/heartbeat/nginx	2012-10-30 13:49:01.000000000 +0100
+diff -dur resource-agents-3.9.7.orig/heartbeat/nginx resource-agents-3.9.7/heartbeat/nginx
+--- resource-agents-3.9.7.orig/heartbeat/nginx	2016-02-03 11:57:55.000000000 +0100
++++ resource-agents-3.9.7/heartbeat/nginx	2016-11-28 10:10:14.000000000 +0100
 @@ -1,4 +1,4 @@
 -#!/bin/sh
 +#!/bin/bash
  #
  #	High-Availability nginx OCF resource agent
  # 
---- ClusterLabs-resource-agents-ac806fd/heartbeat/tomcat.orig	2013-02-07 13:17:42.000000000 +0100
-+++ ClusterLabs-resource-agents-ac806fd/heartbeat/tomcat	2013-09-07 15:05:43.176434602 +0200
+diff -dur resource-agents-3.9.7.orig/heartbeat/pgsql resource-agents-3.9.7/heartbeat/pgsql
+--- resource-agents-3.9.7.orig/heartbeat/pgsql	2016-02-03 11:57:55.000000000 +0100
++++ resource-agents-3.9.7/heartbeat/pgsql	2016-11-28 10:09:54.000000000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ # Description:  Manages a PostgreSQL Server as an OCF High-Availability
+ #               resource
+diff -dur resource-agents-3.9.7.orig/heartbeat/tomcat resource-agents-3.9.7/heartbeat/tomcat
+--- resource-agents-3.9.7.orig/heartbeat/tomcat	2016-02-03 11:57:55.000000000 +0100
++++ resource-agents-3.9.7/heartbeat/tomcat	2016-11-28 10:10:14.000000000 +0100
 @@ -1,4 +1,4 @@
 -#!/bin/sh
 +#!/bin/bash
  #
  # Description:  Manages a Tomcat Server as an OCF High-Availability
  #               resource under Heartbeat/LinuxHA control
+diff -dur resource-agents-3.9.7.orig/heartbeat/Xen resource-agents-3.9.7/heartbeat/Xen
+--- resource-agents-3.9.7.orig/heartbeat/Xen	2016-02-03 11:57:55.000000000 +0100
++++ resource-agents-3.9.7/heartbeat/Xen	2016-11-28 10:10:14.000000000 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ #
+ # Support:      linux-ha@lists.linux-ha.org
