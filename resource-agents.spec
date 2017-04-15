@@ -2,13 +2,13 @@
 Summary:	Reusable cluster resource scripts
 Summary(pl.UTF-8):	Skrypty wielokrotnego użytku do obsługi zasobów klastrowych
 Name:		resource-agents
-Version:	3.9.7
-Release:	2
+Version:	4.0.1
+Release:	1
 License:	GPL v2+, LGPL v2.1+
 Group:		Daemons
 #Source0Download: https://github.com/ClusterLabs/resource-agents/releases
 Source0:	https://github.com/ClusterLabs/resource-agents/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	c59096b1bacc704e8a5a285f15729109
+# Source0-md5:	8530431861e659d4ce2f04afcc4efc03
 Source1:	ldirectord.init
 Source2:	%{name}.tmpfiles
 Patch0:		%{name}-no_header_parsing.patch
@@ -22,7 +22,6 @@ BuildRequires:	docbook-dtd44-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	libnet-devel >= 1.0
-BuildRequires:	libtool
 BuildRequires:	libxslt-progs
 BuildRequires:	openssl-tools
 BuildRequires:	perl-tools-pod
@@ -72,7 +71,6 @@ współpracuje z kodem heartbeat (http://www.linux-ha.org/).
 %patch2 -p1
 
 %build
-%{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__autoheader}
