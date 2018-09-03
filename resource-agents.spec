@@ -2,18 +2,19 @@
 Summary:	Reusable cluster resource scripts
 Summary(pl.UTF-8):	Skrypty wielokrotnego użytku do obsługi zasobów klastrowych
 Name:		resource-agents
-Version:	4.0.1
+Version:	4.1.1
 Release:	1
 License:	GPL v2+, LGPL v2.1+
 Group:		Daemons
 #Source0Download: https://github.com/ClusterLabs/resource-agents/releases
 Source0:	https://github.com/ClusterLabs/resource-agents/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	8530431861e659d4ce2f04afcc4efc03
+# Source0-md5:	82e3a335f942347f1b7c27b9f8e8e984
 Source1:	ldirectord.init
 Source2:	%{name}.tmpfiles
 Patch0:		%{name}-no_header_parsing.patch
 Patch1:		%{name}-bash.patch
 Patch2:		%{name}-ac.patch
+Patch3:		%{name}-sizeof.patch
 URL:		http://www.linux-ha.org/
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.10.1
@@ -40,6 +41,19 @@ environment.
 %description -l pl.UTF-8
 Skrypty pozwalające na działanie popularnych usług w środowisku
 wysokiej dostępności (High Availability).
+
+%package devel
+Summary:	Resource Agents header file
+Summary(pl.UTF-8):	Plik nagłówkowy Resource Agents
+Group:		Development/Libraries
+# doesn't require base
+Conflicts:	resource-agents < 4.1.1
+
+%description devel
+Resource Agents header file.
+
+%description devel -l pl.UTF-8
+Plik nagłówkowy Resource Agents.
 
 %package -n ldirectord
 Summary:	A Monitoring Daemon for Maintaining High Availability Resources
@@ -69,6 +83,7 @@ współpracuje z kodem heartbeat (http://www.linux-ha.org/).
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__aclocal}
@@ -137,11 +152,11 @@ fi
 %dir %{_sysconfdir}/ha.d/resource.d
 %{_sysconfdir}/ha.d/shellfuncs
 
-%attr(755,root,root) %{_libdir}/heartbeat/send_arp
-%attr(755,root,root) %{_libdir}/heartbeat/send_ua
-%attr(755,root,root) %{_libdir}/heartbeat/sfex_daemon
-%attr(755,root,root) %{_libdir}/heartbeat/findif
-%attr(755,root,root) %{_libdir}/heartbeat/tickle_tcp
+%attr(755,root,root) %{_libexecdir}/heartbeat/send_arp
+%attr(755,root,root) %{_libexecdir}/heartbeat/send_ua
+%attr(755,root,root) %{_libexecdir}/heartbeat/sfex_daemon
+%attr(755,root,root) %{_libexecdir}/heartbeat/findif
+%attr(755,root,root) %{_libexecdir}/heartbeat/tickle_tcp
 
 %dir %{_prefix}/lib/ocf
 %dir %{_prefix}/lib/ocf/lib
@@ -167,7 +182,7 @@ fi
 
 %{_datadir}/resource-agents
 
-%{_includedir}/heartbeat/agent_config.h
+%{systemdunitdir}/resource-agents-deps.target
 
 %attr(1755,root,root) /var/run/resource-agents
 %{systemdtmpfilesdir}/%{name}.conf
@@ -175,6 +190,10 @@ fi
 %{_mandir}/man7/ocf_heartbeat_*.7*
 %{_mandir}/man8/ocf-tester.8*
 %{_mandir}/man8/sfex_init.8*
+
+%files devel
+%defattr(644,root,root,755)
+%{_includedir}/heartbeat/agent_config.h
 
 %files -n ldirectord
 %defattr(644,root,root,755)
