@@ -1,4 +1,3 @@
-%include	/usr/lib/rpm/macros.perl
 Summary:	Reusable cluster resource scripts
 Summary(pl.UTF-8):	Skrypty wielokrotnego użytku do obsługi zasobów klastrowych
 Name:		resource-agents
