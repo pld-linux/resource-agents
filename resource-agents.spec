@@ -1,19 +1,18 @@
 Summary:	Reusable cluster resource scripts
 Summary(pl.UTF-8):	Skrypty wielokrotnego użytku do obsługi zasobów klastrowych
 Name:		resource-agents
-Version:	4.1.1
+Version:	4.5.0
 Release:	1
 License:	GPL v2+, LGPL v2.1+
 Group:		Daemons
 #Source0Download: https://github.com/ClusterLabs/resource-agents/releases
 Source0:	https://github.com/ClusterLabs/resource-agents/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	82e3a335f942347f1b7c27b9f8e8e984
+# Source0-md5:	265fd01a2b4119b7b733c829c4c36d32
 Source1:	ldirectord.init
 Source2:	%{name}.tmpfiles
 Patch0:		%{name}-no_header_parsing.patch
 Patch1:		%{name}-bash.patch
 Patch2:		%{name}-ac.patch
-Patch3:		%{name}-sizeof.patch
 URL:		http://www.linux-ha.org/
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.10.1
@@ -26,10 +25,12 @@ BuildRequires:	libxslt-progs
 BuildRequires:	openssl-tools
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
-BuildRequires:	python-devel
+BuildRequires:	python-devel >= 1:2.7
 BuildRequires:	rpm-perlprov
+BuildRequires:	sed >= 4.0
 BuildRequires:	which
 Requires:	cluster-glue
+Requires:	python >= 1:2.7
 Obsoletes:	heartbeat-resources < 3.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -82,13 +83,14 @@ współpracuje z kodem heartbeat (http://www.linux-ha.org/).
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
-%{__aclocal}
+%{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+# with strict alasing tools/tickle_tcp.c emits "maybe uninitialized" warnings
+CFLAGS="%{rpmcflags} -fno-strict-aliasing"
 %configure \
 	FSCK=/sbin/fsck \
 	FUSER=/bin/fuser \
@@ -96,6 +98,7 @@ współpracuje z kodem heartbeat (http://www.linux-ha.org/).
 	MAILCMD=/bin/mail \
 	MOUNT=/bin/mount \
 	PING=/bin/ping \
+	PYTHON="%{__python}" \
 	--docdir=%{_docdir}/%{name}-%{version} \
 	--enable-fatal-warnings \
 	--with-initdir=/etc/rc.d/init.d \
@@ -161,6 +164,7 @@ fi
 %dir %{_prefix}/lib/ocf/lib
 %dir %{_prefix}/lib/ocf/lib/heartbeat
 %{_prefix}/lib/ocf/lib/heartbeat/ocf-*
+%{_prefix}/lib/ocf/lib/heartbeat/ocf.py
 %{_prefix}/lib/ocf/lib/heartbeat/*.sh
 %dir %{_prefix}/lib/ocf/resource.d
 %dir %{_prefix}/lib/ocf/resource.d/heartbeat

@@ -7,15 +7,6 @@ diff -dur resource-agents-3.9.7.orig/heartbeat/apache resource-agents-3.9.7/hear
  #
  #	High-Availability Apache/IBMhttp control script
  # 
-diff -dur resource-agents-3.9.7.orig/heartbeat/CTDB resource-agents-3.9.7/heartbeat/CTDB
---- resource-agents-3.9.7.orig/heartbeat/CTDB	2016-02-03 11:57:55.000000000 +0100
-+++ resource-agents-3.9.7/heartbeat/CTDB	2016-11-28 10:10:14.000000000 +0100
-@@ -1,4 +1,4 @@
--#!/bin/sh
-+#!/bin/bash
- #
- #             OCF Resource Agent for managing CTDB
- #
 diff -dur resource-agents-3.9.7.orig/heartbeat/dhcpd resource-agents-3.9.7/heartbeat/dhcpd
 --- resource-agents-3.9.7.orig/heartbeat/dhcpd	2016-02-03 11:57:55.000000000 +0100
 +++ resource-agents-3.9.7/heartbeat/dhcpd	2016-11-28 10:10:14.000000000 +0100
