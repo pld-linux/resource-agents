@@ -1,19 +1,19 @@
 Summary:	Reusable cluster resource scripts
 Summary(pl.UTF-8):	Skrypty wielokrotnego użytku do obsługi zasobów klastrowych
 Name:		resource-agents
-Version:	4.5.0
-Release:	2
+Version:	4.10.0
+Release:	1
 License:	GPL v2+, LGPL v2.1+
 Group:		Daemons
 #Source0Download: https://github.com/ClusterLabs/resource-agents/releases
 Source0:	https://github.com/ClusterLabs/resource-agents/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	265fd01a2b4119b7b733c829c4c36d32
+# Source0-md5:	fffe3881b839846a6dc587ef83ec4cd5
 Source1:	ldirectord.init
 Source2:	%{name}.tmpfiles
-Patch0:		%{name}-no_header_parsing.patch
+Patch0:		%{name}-types.patch
 Patch1:		%{name}-bash.patch
 Patch2:		%{name}-ac.patch
-URL:		http://www.linux-ha.org/
+URL:		https://github.com/ClusterLabs/resource-agents
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.10.1
 BuildRequires:	cluster-glue-libs-devel
@@ -24,10 +24,11 @@ BuildRequires:	libnet-devel >= 1.0
 BuildRequires:	libxslt-progs
 BuildRequires:	openssl-tools
 BuildRequires:	perl-tools-pod
-BuildRequires:	pkgconfig
+BuildRequires:	pkgconfig >= 1:0.18
 BuildRequires:	python-devel >= 1:2.7
 BuildRequires:	rpm-perlprov
 BuildRequires:	sed >= 4.0
+BuildRequires:	systemd-devel
 BuildRequires:	which
 Requires:	cluster-glue
 Requires:	python >= 1:2.7
@@ -64,19 +65,19 @@ Requires(post,preun):	/sbin/chkconfig
 Requires:	ipvsadm
 Requires:	rc-scripts
 Provides:	heartbeat-ldirectord
-Obsoletes:	heartbeat-ldirectord
+Obsoletes:	heartbeat-ldirectord < 3.0
 
 %description -n ldirectord
 The Linux Director Daemon (ldirectord) is a stand alone daemon for
 monitoring the services on real servers. Currently, HTTP, HTTPS, and
 FTP services are supported. ldirectord is simple to install and works
-with the heartbeat code (http://www.linux-ha.org/).
+with Pacemaker.
 
 %description -n ldirectord -l pl.UTF-8
 Demon Linux Director (ldirectord) to samodzielny demon do
 monitorowania usług na rzeczywistych serwerach. Obecnie obsługiwane są
 usługi HTTP, HTTPS i FTP. ldirectord jest prosty do zainstalowania i
-współpracuje z kodem heartbeat (http://www.linux-ha.org/).
+współpracuje Pacemakerem.
 
 %prep
 %setup -q
@@ -103,6 +104,7 @@ CFLAGS="%{rpmcflags} -fno-strict-aliasing"
 	--enable-fatal-warnings \
 	--with-initdir=/etc/rc.d/init.d \
 	--with-ocf-root=%{_prefix}/lib/ocf \
+	--with-ras-set=all \
 	--with-systemdsystemunitdir=%{systemdunitdir}
 
 %{__make}
@@ -158,6 +160,7 @@ fi
 %attr(755,root,root) %{_libexecdir}/heartbeat/send_ua
 %attr(755,root,root) %{_libexecdir}/heartbeat/sfex_daemon
 %attr(755,root,root) %{_libexecdir}/heartbeat/findif
+%attr(755,root,root) %{_libexecdir}/heartbeat/storage_mon
 %attr(755,root,root) %{_libexecdir}/heartbeat/tickle_tcp
 
 %dir %{_prefix}/lib/ocf
@@ -197,6 +200,7 @@ fi
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/heartbeat/agent_config.h
+%{_npkgconfigdir}/resource-agents.pc
 
 %files -n ldirectord
 %defattr(644,root,root,755)
