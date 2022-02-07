@@ -77,7 +77,7 @@ with Pacemaker.
 Demon Linux Director (ldirectord) to samodzielny demon do
 monitorowania usług na rzeczywistych serwerach. Obecnie obsługiwane są
 usługi HTTP, HTTPS i FTP. ldirectord jest prosty do zainstalowania i
-współpracuje Pacemakerem.
+współpracuje z Pacemakerem.
 
 %prep
 %setup -q
