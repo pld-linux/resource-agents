@@ -1,6 +1,6 @@
---- resource-agents-4.5.0/configure.ac.orig	2020-05-01 15:46:08.451797734 +0200
-+++ resource-agents-4.5.0/configure.ac	2020-05-01 15:51:52.173268968 +0200
-@@ -23,8 +23,6 @@
+--- resource-agents-4.10.0/configure.ac.orig	2021-11-03 10:12:01.000000000 +0100
++++ resource-agents-4.10.0/configure.ac	2022-02-07 20:11:41.207130114 +0100
+@@ -23,14 +23,13 @@ AC_INIT([resource-agents],
  	m4_esyscmd([make/git-version-gen .tarball-version]),
  	[developers@clusterlabs.org])
  
@@ -8,8 +8,7 @@
 -
  CRM_DTD_VERSION="1.0"
  
- PKG_FEATURES=""
-@@ -33,6 +31,7 @@
+ AC_CONFIG_AUX_DIR(.)
  AC_CONFIG_MACRO_DIR([m4])
  
  AC_CANONICAL_HOST

@@ -52,12 +52,11 @@ diff -dur resource-agents-3.9.7.orig/heartbeat/tomcat resource-agents-3.9.7/hear
  #
  # Description:  Manages a Tomcat Server as an OCF High-Availability
  #               resource under Heartbeat/LinuxHA control
-diff -dur resource-agents-3.9.7.orig/heartbeat/Xen resource-agents-3.9.7/heartbeat/Xen
---- resource-agents-3.9.7.orig/heartbeat/Xen	2016-02-03 11:57:55.000000000 +0100
-+++ resource-agents-3.9.7/heartbeat/Xen	2016-11-28 10:10:14.000000000 +0100
+--- resource-agents-4.10.0/heartbeat/Xen.orig	2022-02-07 19:20:50.915366997 +0100
++++ resource-agents-4.10.0/heartbeat/Xen	2022-02-07 19:20:53.738846971 +0100
 @@ -1,4 +1,4 @@
 -#!/bin/sh
 +#!/bin/bash
  #
  #
- # Support:      linux-ha@lists.linux-ha.org
+ # Support:      users@clusterlabs.org
