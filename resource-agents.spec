@@ -1,3 +1,4 @@
+%bcond_without	systemd	# systemd
 Summary:	Reusable cluster resource scripts
 Summary(pl.UTF-8):	Skrypty wielokrotnego użytku do obsługi zasobów klastrowych
 Name:		resource-agents
@@ -29,7 +30,7 @@ BuildRequires:	pkgconfig >= 1:0.18
 BuildRequires:	python3-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	sed >= 4.0
-BuildRequires:	systemd-devel
+%{?with_systemd:BuildRequires:	systemd-devel}
 BuildRequires:	which
 Requires:	cluster-glue
 Requires:	python >= 1:2.7
@@ -189,7 +190,9 @@ fi
 
 %{_datadir}/resource-agents
 
+%if %{with systemd}
 %{systemdunitdir}/resource-agents-deps.target
+%endif
 
 %attr(1755,root,root) /var/run/resource-agents
 %{systemdtmpfilesdir}/%{name}.conf
@@ -209,6 +212,8 @@ fi
 %attr(755,root,root) %{_sysconfdir}/ha.d/resource.d/ldirectord
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/ldirectord
 %attr(754,root,root) /etc/rc.d/init.d/ldirectord
+%if %{with systemd}
 %{systemdunitdir}/ldirectord.service
+%endif
 %attr(755,root,root) %{_sbindir}/ldirectord
 %{_mandir}/man8/ldirectord.8*
