@@ -33,7 +33,7 @@ BuildRequires:	sed >= 4.0
 %{?with_systemd:BuildRequires:	systemd-devel}
 BuildRequires:	which
 Requires:	cluster-glue
-Requires:	python >= 1:2.7
+Requires:	python3
 Obsoletes:	heartbeat-resources < 3.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
