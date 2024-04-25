@@ -26,7 +26,7 @@ BuildRequires:	libxslt-progs
 BuildRequires:	openssl-tools
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig >= 1:0.18
-BuildRequires:	python-devel >= 1:2.7
+BuildRequires:	python3-devel
 BuildRequires:	rpm-perlprov
 BuildRequires:	sed >= 4.0
 BuildRequires:	systemd-devel
@@ -100,7 +100,7 @@ CFLAGS="%{rpmcflags} -fno-strict-aliasing"
 	MAILCMD=/bin/mail \
 	MOUNT=/bin/mount \
 	PING=/bin/ping \
-	PYTHON="%{__python}" \
+	PYTHON="%{__python3}" \
 	--docdir=%{_docdir}/%{name}-%{version} \
 	--enable-fatal-warnings \
 	--with-initdir=/etc/rc.d/init.d \
