@@ -1,13 +1,13 @@
 Summary:	Reusable cluster resource scripts
 Summary(pl.UTF-8):	Skrypty wielokrotnego użytku do obsługi zasobów klastrowych
 Name:		resource-agents
-Version:	4.10.0
-Release:	2
+Version:	4.14.0
+Release:	1
 License:	GPL v2+, LGPL v2.1+
 Group:		Daemons
 #Source0Download: https://github.com/ClusterLabs/resource-agents/releases
 Source0:	https://github.com/ClusterLabs/resource-agents/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	fffe3881b839846a6dc587ef83ec4cd5
+# Source0-md5:	0f48ab395633d2a92a31a54b7b0c018d
 Source1:	ldirectord.init
 Source2:	%{name}.tmpfiles
 Patch0:		%{name}-types.patch
@@ -21,6 +21,7 @@ BuildRequires:	docbook-dtd44-xml
 BuildRequires:	docbook-style-xsl
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	libnet-devel >= 1.0
+BuildRequires:	libqb-devel
 BuildRequires:	libxslt-progs
 BuildRequires:	openssl-tools
 BuildRequires:	perl-tools-pod

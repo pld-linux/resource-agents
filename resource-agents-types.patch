@@ -1,34 +1,35 @@
---- resource-agents-4.10.0/tools/storage_mon.c.orig	2021-11-03 10:12:01.000000000 +0100
-+++ resource-agents-4.10.0/tools/storage_mon.c	2022-02-07 18:30:47.352605699 +0100
+diff -ur resource-agents-4.14.0.orig/tools/storage_mon.c resource-agents-4.14.0/tools/storage_mon.c
+--- resource-agents-4.14.0.orig/tools/storage_mon.c	2024-04-24 09:11:40.000000000 +0000
++++ resource-agents-4.14.0/tools/storage_mon.c	2024-04-25 19:29:01.248095163 +0000
 @@ -1,3 +1,4 @@
 +#include <inttypes.h>
  #include <stdio.h>
  #include <getopt.h>
  #include <stdlib.h>
-@@ -60,7 +61,7 @@ static void *test_device(const char *dev
- 		exit(-1);
+@@ -150,7 +151,7 @@
+ 		goto error;
  	}
  	if (verbose) {
--		fprintf(stderr, "%s: size=%zu\n", device, devsize);
-+		fprintf(stderr, "%s: size=%"PRIu64"\n", device, devsize);
+-		PRINT_STORAGE_MON_INFO("%s: opened %s O_DIRECT, size=%zu", device, (flags & O_DIRECT)?"with":"without", devsize);
++		PRINT_STORAGE_MON_INFO("%s: opened %s O_DIRECT, size=%"PRIu64, device, (flags & O_DIRECT)?"with":"without", devsize);
  	}
+ 
  	/* Don't fret about real randomness */
- 	srand(time(NULL) + getpid());
-@@ -74,7 +75,7 @@ static void *test_device(const char *dev
+@@ -163,7 +164,7 @@
+ 		goto error;
  	}
- 
  	if (verbose) {
--		printf("%s: reading from pos %ld\n", device, seek_spot);
-+		printf("%s: reading from pos %"PRId64"\n", device, (int64_t)seek_spot);
+-		PRINT_STORAGE_MON_INFO("%s: reading from pos %ld", device, seek_spot);
++		PRINT_STORAGE_MON_INFO("%s: reading from pos %"PRId64, device, (int64_t)seek_spot);
  	}
  
- 	res = read(device_fd, buffer, sizeof(buffer));
-@@ -84,7 +85,7 @@ static void *test_device(const char *dev
- 		exit(-1);
- 	}
- 	if (res < (int)sizeof(buffer)) {
--		fprintf(stderr, "Failed to read %ld bytes from %s, got %d\n", sizeof(buffer), device, res);
-+		fprintf(stderr, "Failed to read %zd bytes from %s, got %d\n", sizeof(buffer), device, res);
- 		close(device_fd);
- 		exit(-1);
+ 	if (flags & O_DIRECT) {
+@@ -203,7 +204,7 @@
+ 			goto error;
+ 		}
+ 		if (res < (int)sizeof(buffer)) {
+-			PRINT_STORAGE_MON_ERR("Failed to read %ld bytes from %s, got %d", sizeof(buffer), device, res);
++			PRINT_STORAGE_MON_ERR("Failed to read %zd bytes from %s, got %d", sizeof(buffer), device, res);
+ 			goto error;
+ 		}
  	}
